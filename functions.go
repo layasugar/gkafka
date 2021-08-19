@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 )
 
-func (e *Engine) setSaramaConfig(cfg *KafkaConf, f ...FuncCfg) error {
+func (e *Engine) setSaramaConfig(cfg *Config, f ...FuncCfg) error {
 	var err error
 	config := sarama.NewConfig()
 
@@ -61,12 +61,13 @@ func (e *Engine) setSaramaConfig(cfg *KafkaConf, f ...FuncCfg) error {
 		//}
 	}
 
-	config.Producer.Partitioner = sarama.NewRandomPartitioner
 	config.Producer.Return.Errors = true
-	config.Producer.RequiredAcks = sarama.WaitForAll
 	config.Producer.Return.Successes = true
-	config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRoundRobin
-	config.Consumer.Offsets.Initial = sarama.OffsetNewest
+	config.Producer.RequiredAcks = sarama.WaitForAll
+	config.Producer.Partitioner = sarama.NewManualPartitioner // 随机分区
+	//config.Consumer.Return.Errors = true
+	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+	//config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRoundRobin // 默认是range
 
 	e.config = config
 	for _, fe := range f {
@@ -81,9 +82,37 @@ func (e *Engine) setSaramaConfig(cfg *KafkaConf, f ...FuncCfg) error {
 	return nil
 }
 
-func SetClientId(value string) FuncCfg {
+func SetClientId(v string) FuncCfg {
 	return func(e *Engine) error {
-		e.config.ClientID = value
+		e.config.ClientID = v
+		return nil
+	}
+}
+
+func SetOffsetsInitial(v int64) FuncCfg {
+	return func(e *Engine) error {
+		e.config.Consumer.Offsets.Initial = v
+		return nil
+	}
+}
+
+func SetPartitioner(v sarama.PartitionerConstructor) FuncCfg {
+	return func(e *Engine) error {
+		e.config.Producer.Partitioner = v
+		return nil
+	}
+}
+
+func SetReBalanceStrategy(v sarama.BalanceStrategy) FuncCfg {
+	return func(e *Engine) error {
+		e.config.Consumer.Group.Rebalance.Strategy = v
+		return nil
+	}
+}
+
+func SetRequiredAcks(v sarama.RequiredAcks) FuncCfg {
+	return func(e *Engine) error {
+		e.config.Producer.RequiredAcks = v
 		return nil
 	}
 }

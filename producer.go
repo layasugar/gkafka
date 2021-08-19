@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func InitProducer(cfg *KafkaConf, f ...FuncCfg) *Engine {
+func InitProducer(cfg *Config, f ...FuncCfg) *Engine {
 	log.Println("init kafka producer, it may take a few seconds to init the connection.")
 
 	var err error

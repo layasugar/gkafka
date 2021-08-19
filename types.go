@@ -17,7 +17,7 @@ type ConsumerData struct {
 	Offset    int64
 }
 
-type KafkaConf struct {
+type Config struct {
 	Brokers  string `json:"brokers"`
 	Topic    string `json:"topic"`
 	Group    string `json:"group"`

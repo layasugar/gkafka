@@ -7,6 +7,7 @@
 ```
 
 #### producer 生产者
+#### protocol(plaintext, sasl_ssl, sasl_plaintext)
 
 ```
     var cfg = &KafkaConfig{

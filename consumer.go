@@ -12,7 +12,7 @@ import (
 	"syscall"
 )
 
-func InitConsumer(cfg *KafkaConf, dataChan chan *ConsumerData, f ...FuncCfg) {
+func InitConsumer(cfg *Config, dataChan chan *ConsumerData, f ...FuncCfg) {
 	var err error
 	var e = &Engine{}
 
