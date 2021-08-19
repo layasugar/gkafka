@@ -28,10 +28,13 @@
 #### consumer 消费者
 
 ```
-    consumerData := make(chan *gkafka.ConsumerData)
-    go gkafka.InitConsumer(item, consumerData, gkafka.SetClientId("kafka-go"))
-    
-    for consumerData := range consumerData {
-	    logs.Printf("pool submit topic:%q partition:%d offset:%d", data.Topic, data.Partition, data.Offset)
+	consumerData := make(chan *gkafka.ConsumerData)
+	go gkafka.InitConsumer(cfg, consumerData, gkafka.SetClientId("kafka-go"))
+
+	for data := range consumerData {
+		log.Printf("pool submit topic:%q partition:%d offset:%d", data.Topic, data.Partition, data.Offset)
 	}
 ```
+
+## 
+[完整示例](https://github.com/layasugar/demo-go/blob/master/main_kafka.go)
