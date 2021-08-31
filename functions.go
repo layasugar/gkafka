@@ -64,10 +64,8 @@ func (e *Engine) setSaramaConfig(cfg *Config, f ...FuncCfg) error {
 	config.Producer.Return.Errors = true
 	config.Producer.Return.Successes = true
 	config.Producer.RequiredAcks = sarama.WaitForAll
-	config.Producer.Partitioner = sarama.NewManualPartitioner // 随机分区
-	//config.Consumer.Return.Errors = true
+	config.Producer.Partitioner = sarama.NewManualPartitioner
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
-	//config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRoundRobin // 默认是range
 
 	e.config = config
 	for _, fe := range f {
