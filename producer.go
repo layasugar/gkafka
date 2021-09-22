@@ -32,3 +32,8 @@ func (e *Engine) SendMsg(topic, message string, partition int32) (err error) {
 	_, _, err = e.producer.SendMessage(msg)
 	return
 }
+
+func (e *Engine) SendMsgs(msgs []*sarama.ProducerMessage) (err error) {
+	err = e.producer.SendMessages(msgs)
+	return
+}
