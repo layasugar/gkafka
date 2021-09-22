@@ -3,7 +3,7 @@
 #### 引入包
 
 ```
-    import "github.com/layasugar/kafka-go"
+    import "github.com/layasugar/gkafka"
 ```
 
 #### producer 生产者
@@ -29,7 +29,7 @@
 
 ```
 	consumerData := make(chan *gkafka.ConsumerData)
-	go gkafka.InitConsumer(cfg, consumerData, gkafka.SetClientId("kafka-go"))
+	go gkafka.InitConsumer(cfg, consumerData, gkafka.SetClientId("gkafka"))
 
 	for data := range consumerData {
 		log.Printf("pool submit topic:%q partition:%d offset:%d", data.Topic, data.Partition, data.Offset)

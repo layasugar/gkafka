@@ -1,4 +1,4 @@
-module github.com/layasugar/kafka-go
+module github.com/layasugar/gkafka
 
 go 1.17
 
