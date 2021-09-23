@@ -46,7 +46,7 @@ func InitConsumer(cfg *Config, dataChan chan *ConsumerData, f ...FuncCfg) {
 		}
 	}()
 	<-consumer.ready // Await till the consumer has been set up
-	log.Printf("[gkafka_consumer] InitConsumer success")
+	log.Printf("[gkafka_consumer] InitConsumer success topic: %v, group: %s.", cfg.Topic, cfg.Group)
 
 	sigterm := make(chan os.Signal, 1)
 	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)

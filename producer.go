@@ -8,8 +8,6 @@ import (
 )
 
 func InitProducer(cfg *Config, f ...FuncCfg) *Engine {
-	log.Println("init kafka producer, it may take a few seconds to init the connection.")
-
 	var err error
 	var e = &Engine{}
 
@@ -18,6 +16,7 @@ func InitProducer(cfg *Config, f ...FuncCfg) *Engine {
 	}
 
 	producer, err := sarama.NewSyncProducer(strings.Split(cfg.Brokers, ","), e.config)
+	log.Printf("[gkafka_producer] InitProducer success.")
 
 	e.producer = producer
 	return e
